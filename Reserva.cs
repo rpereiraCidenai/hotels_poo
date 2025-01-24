@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ConsoleApp16
+namespace Hotel
 {
     internal class Reserva
     {
+
         private int _idReserva;
         private Quarto _quarto;
         private string _hospede;
@@ -13,50 +18,42 @@ namespace ConsoleApp16
         public Reserva(int idReserva, Quarto quarto, string hospede, int noites)
         {
             _idReserva = idReserva;
-            _quarto = quarto ?? throw new ArgumentNullException(nameof(quarto), "O quarto não pode ser nulo.");
-            _hospede = hospede ?? throw new ArgumentNullException(nameof(hospede), "O nome do hóspede não pode ser nulo.");
-
-            if (noites <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(noites), "O número de noites deve ser maior que zero.");
-            }
+            _quarto = quarto  ;
+            _hospede = hospede ;
 
             _noites = noites;
             CalcularTotal(); // Calcula o valor total no construtor
         }
 
-        public int GetIdReserva()
+        public int GetIdReserva() // devolve id da reserva
         {
             return _idReserva;
         }
 
-        public void SetIdReserva(int idReserva)
+        public void SetIdReserva(int idReserva) //alterar ou criar id resrva
         {
-            if (idReserva <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(idReserva), "O Id da reserva deve ser maior que zero.");
-            }
+         
             _idReserva = idReserva;
         }
 
-        public Quarto GetQuarto()
+        public Quarto GetQuarto() // devolve quarto relativo a esta reserva
         {
             return _quarto;
         }
 
-        public void SetQuarto(Quarto quarto)
+        public void SetQuarto(Quarto quarto) //altera ou grava quarto relativo a reserva 
         {
-            _quarto = quarto ?? throw new ArgumentNullException(nameof(quarto), "O quarto não pode ser nulo.");
+            _quarto = quarto ;
         }
 
-        public string GetHospede()
+        public string GetHospede() // devovle hospoedo alojado nesta reserva
         {
             return _hospede;
         }
 
-        public void SetHospede(string hospede)
+        public void SetHospede(string hospede) // faz set do hospede 
         {
-            _hospede = hospede ?? throw new ArgumentNullException(nameof(hospede), "O nome do hóspede não pode ser nulo.");
+            _hospede = hospede;
         }
 
         public int GetNoites()
@@ -64,14 +61,15 @@ namespace ConsoleApp16
             return _noites;
         }
 
-        public void SetNoites(int noites)
+        public void SetNoites(int noites) //armazena numero noties 
         {
-            if (noites <= 0)
+            if (noites > 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(noites), "O número de noites deve ser maior que zero.");
+                _noites = noites;
+                CalcularTotal();//Recalcula o valor total
+
             }
-            _noites = noites;
-            CalcularTotal();//Recalcula o valor total
+            
         }
         public double GetValorTotal()
         {
@@ -79,9 +77,10 @@ namespace ConsoleApp16
         }
         // Removido o SetValorTotal
 
-        private void CalcularTotal()
+        private void CalcularTotal() // solicita ao quarto o valor total e devovle
         {
             _valorTotal = _quarto.CalcularPrecoTotal(_noites);
         }
+
     }
 }
